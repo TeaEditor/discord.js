@@ -1,7 +1,7 @@
 'use strict';
 
-const GuildChannel = require('./GuildChannel');
-const CategoryChannelChildManager = require('../managers/CategoryChannelChildManager');
+const { GuildChannel } = require('./GuildChannel');
+const { CategoryChannelChildManager } = require('../managers/CategoryChannelChildManager');
 
 /**
  * Represents a guild category channel on Discord.
@@ -9,8 +9,21 @@ const CategoryChannelChildManager = require('../managers/CategoryChannelChildMan
  */
 class CategoryChannel extends GuildChannel {
   /**
+   * The id of the parent of this channel.
+   * @name CategoryChannel#parentId
+   * @type {null}
+   */
+
+  /**
+   * The parent of this channel.
+   * @name CategoryChannel#parent
+   * @type {null}
+   * @readonly
+   */
+
+  /**
    * Sets the category parent of this channel.
-   * <warn>It is not currently possible to set the parent of a CategoryChannel.</warn>
+   * <warn>It is not possible to set the parent of a CategoryChannel.</warn>
    * @method setParent
    * @memberof CategoryChannel
    * @instance
@@ -29,4 +42,4 @@ class CategoryChannel extends GuildChannel {
   }
 }
 
-module.exports = CategoryChannel;
+exports.CategoryChannel = CategoryChannel;

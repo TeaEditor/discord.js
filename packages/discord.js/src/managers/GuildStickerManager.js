@@ -2,9 +2,9 @@
 
 const { Collection } = require('@discordjs/collection');
 const { Routes } = require('discord-api-types/v10');
-const CachedManager = require('./CachedManager');
+const { CachedManager } = require('./CachedManager');
 const { DiscordjsTypeError, ErrorCodes } = require('../errors');
-const MessagePayload = require('../structures/MessagePayload');
+const { MessagePayload } = require('../structures/MessagePayload');
 const { Sticker } = require('../structures/Sticker');
 
 /**
@@ -35,7 +35,7 @@ class GuildStickerManager extends CachedManager {
   /**
    * Options used to create a guild sticker.
    * @typedef {Object} GuildStickerCreateOptions
-   * @property {BufferResolvable|Stream|JSONEncodable<AttachmentPayload>} file The file for the sticker
+   * @property {AttachmentPayload|BufferResolvable|Stream} file The file for the sticker
    * @property {string} name The name for the sticker
    * @property {string} tags The Discord name of a unicode emoji representing the sticker's expression
    * @property {?string} [description] The description for the sticker
@@ -179,4 +179,4 @@ class GuildStickerManager extends CachedManager {
   }
 }
 
-module.exports = GuildStickerManager;
+exports.GuildStickerManager = GuildStickerManager;

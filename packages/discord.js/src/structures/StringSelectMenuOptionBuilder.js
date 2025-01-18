@@ -1,6 +1,7 @@
 'use strict';
 
-const { SelectMenuOptionBuilder: BuildersSelectMenuOption, isJSONEncodable } = require('@discordjs/builders');
+const { SelectMenuOptionBuilder: BuildersSelectMenuOption } = require('@discordjs/builders');
+const { isJSONEncodable } = require('@discordjs/util');
 const { toSnakeCase } = require('../util/Transformers');
 const { resolvePartialEmoji } = require('../util/Util');
 
@@ -32,20 +33,17 @@ class StringSelectMenuOptionBuilder extends BuildersSelectMenuOption {
 
   /**
    * Creates a new select menu option builder from JSON data
-   * @param {JSONEncodable<APISelectMenuOption>|APISelectMenuOption} other The other data
+   * @param {StringSelectMenuOptionBuilder|APISelectMenuOption} other The other data
    * @returns {StringSelectMenuOptionBuilder}
    */
   static from(other) {
-    if (isJSONEncodable(other)) {
-      return new this(other.toJSON());
-    }
-    return new this(other);
+    return new this(isJSONEncodable(other) ? other.toJSON() : other);
   }
 }
 
-module.exports = StringSelectMenuOptionBuilder;
+exports.StringSelectMenuOptionBuilder = StringSelectMenuOptionBuilder;
 
 /**
  * @external BuildersSelectMenuOption
- * @see {@link https://discord.js.org/#/docs/builders/main/class/SelectMenuOptionBuilder}
+ * @see {@link https://discord.js.org/docs/packages/builders/stable/StringSelectMenuOptionBuilder:Class}
  */

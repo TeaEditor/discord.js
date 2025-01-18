@@ -2,11 +2,11 @@
 
 const process = require('node:process');
 const { Routes } = require('discord-api-types/v10');
-const CachedManager = require('./CachedManager');
+const { CachedManager } = require('./CachedManager');
 const { BaseChannel } = require('../structures/BaseChannel');
 const { createChannel } = require('../util/Channels');
 const { ThreadChannelTypes } = require('../util/Constants');
-const Events = require('../util/Events');
+const { Events } = require('../util/Events');
 
 let cacheWarningEmitted = false;
 
@@ -36,10 +36,10 @@ class ChannelManager extends CachedManager {
    * @name ChannelManager#cache
    */
 
-  _add(data, guild, { cache = true, allowUnknownGuild = false, fromInteraction = false } = {}) {
+  _add(data, guild, { cache = true, allowUnknownGuild = false } = {}) {
     const existing = this.cache.get(data.id);
     if (existing) {
-      if (cache) existing._patch(data, fromInteraction);
+      if (cache) existing._patch(data);
       guild?.channels?._add(existing);
       if (ThreadChannelTypes.includes(existing.type)) {
         existing.parent?.threads?._add(existing);
@@ -47,7 +47,7 @@ class ChannelManager extends CachedManager {
       return existing;
     }
 
-    const channel = createChannel(this.client, data, guild, { allowUnknownGuild, fromInteraction });
+    const channel = createChannel(this.client, data, guild, { allowUnknownGuild });
 
     if (!channel) {
       this.client.emit(Events.Debug, `Failed to find guild, or unknown type for channel ${data.id} ${data.type}`);
@@ -125,4 +125,4 @@ class ChannelManager extends CachedManager {
   }
 }
 
-module.exports = ChannelManager;
+exports.ChannelManager = ChannelManager;
